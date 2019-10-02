@@ -2066,16 +2066,16 @@ _TupE :: Prism' Exp [Exp]
 _TupE
   = prism' reviewer remitter
   where
-      reviewer = TupE
-      remitter (TupE x) = Just x
+      reviewer = TupE . map Just
+      remitter (TupE x) = sequence x
       remitter _ = Nothing
 
 _UnboxedTupE :: Prism' Exp [Exp]
 _UnboxedTupE
   = prism' reviewer remitter
   where
-      reviewer = UnboxedTupE
-      remitter (UnboxedTupE x) = Just x
+      reviewer = UnboxedTupE . map Just
+      remitter (UnboxedTupE x) = sequence x
       remitter _ = Nothing
 
 #if MIN_VERSION_template_haskell(2,12,0)
